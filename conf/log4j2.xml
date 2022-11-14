@@ -1,0 +1,30 @@
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %c{-3} - %msg%n" />
+        </Console>
+        <File name="OdlFile" fileName="log/odl-client.log" immediateFlush="true" append="false">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %c{-3} - %msg%n"/>
+        </File>
+        <File name="HttpFile" fileName="log/http-client.log" immediateFlush="true" append="false">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %c{-3} - %msg%n"/>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="org.apache.hc.client5.http" level="info">
+            <AppenderRef ref="HttpFile"/>
+        </Logger>
+        <Logger name="org.apache.hc.client5.http.wire" level="info">
+            <AppenderRef ref="HttpFile"/>
+        </Logger>
+
+        <Logger name="com.microfocus.finops" level="info">
+            <AppenderRef ref="OdlFile"/>
+        </Logger>
+
+        <Root level="info">
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+</Configuration>

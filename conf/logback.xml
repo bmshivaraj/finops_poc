@@ -1,0 +1,50 @@
+<configuration scan="true" debug="true">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %logger{10} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="File" class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+        <file>odl-client.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%-4relative [%thread] %logger{10} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>odl-client.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/archived/app.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <!-- each archived file, size max 10MB -->
+            <maxFileSize>10MB</maxFileSize>
+            <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
+            <totalSizeCap>100MB</totalSizeCap>
+            <!-- 60 days to keep -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.baeldung.logback" level="INFO" />
+    <logger name="com.baeldung.logback.tests" level="WARN" />
+
+    <Logger name="org.apache.hc.client5.http" level="DEBUG">
+        <AppenderRef ref="File"/>
+    </Logger>
+    <Logger name="org.apache.hc.client5.http.wire" level="DEBUG">
+        <AppenderRef ref="File"/>
+    </Logger>
+    <Logger name="com.microfocus.finops" level="INFO">
+        <AppenderRef ref="File"/>
+    </Logger>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
